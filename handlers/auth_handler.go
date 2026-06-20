@@ -42,3 +42,25 @@ type LoginRequest struct {
 	Email    string `json:"email"`
 	Password string `json:"password"`
 }
+
+func (h *AuthHandler) Login(c echo.Context) error {
+	var req LoginRequest
+
+	if err := c.Bind(&req); err != nil {
+		return c.JSON(400, map[string]string{
+			"error": "invalid request",
+		})
+	}
+
+	token, err := h.service.Login(req.Email, req.Password)
+	if err != nil {
+		return c.JSON(401, map[string]string{
+			"error": err.Error(),
+		})
+	}
+
+	return c.JSON(200, map[string]interface{}{
+		"message": "login success",
+		"token":   token,
+	})
+}

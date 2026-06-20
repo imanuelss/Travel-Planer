@@ -59,3 +59,10 @@ CREATE TABLE ai_generations (
     FOREIGN KEY (trip_id) REFERENCES trips(id)
     ON DELETE CASCADE
 );
+
+-- sample data for trips table
+INSERT INTO destinations (name, country, description, estimated_daily_cost)
+VALUES
+('Tokyo', 'Japan', 'City of anime and food', 1500000),
+('Bali', 'Indonesia', 'Tropical paradise', 800000),
+('Paris', 'France', 'City of love', 2500000);

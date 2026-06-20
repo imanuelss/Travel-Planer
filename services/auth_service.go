@@ -41,3 +41,22 @@ func (s *AuthService) Register(name, email, password string) (*models.User, erro
 
 	return user, nil
 }
+
+// this is fu0nction for login logic, it will check if the email exists and if the password is correct, then generate a JWT token
+func (s *AuthService) Login(email, password string) (string, error) {
+	user, err := s.userRepo.FindByEmail(email)
+	if err != nil {
+		return "", errors.New("invalid email or password")
+	}
+
+	if !helpers.CheckPassword(password, user.Password) {
+		return "", errors.New("invalid email or password")
+	}
+
+	token, err := helpers.GenerateJWT(user.ID)
+	if err != nil {
+		return "", err
+	}
+
+	return token, nil
+}
