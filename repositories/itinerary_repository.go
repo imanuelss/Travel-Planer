@@ -28,13 +28,21 @@ func (r *itineraryRepository) Create(itinerary *models.Itinerary) error {
 
 func (r *itineraryRepository) FindAll() ([]models.Itinerary, error) {
 	var itineraries []models.Itinerary
-	err := r.db.Find(&itineraries).Error
+	err := r.db.
+		Preload("Trip").
+		Preload("Trip.User").
+		Preload("Trip.Destination").
+		Find(&itineraries).Error
 	return itineraries, err
 }
 
 func (r *itineraryRepository) FindByID(id uint) (*models.Itinerary, error) {
 	var itinerary models.Itinerary
-	err := r.db.First(&itinerary, id).Error
+	err := r.db.
+		Preload("Trip").
+		Preload("Trip.User").
+		Preload("Trip.Destination").
+		First(&itinerary, id).Error
 	return &itinerary, err
 }
 

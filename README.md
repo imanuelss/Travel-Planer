@@ -13,4 +13,9 @@ Tujuan Aplikasi membantu user untuk :
 - Generate AI itinerary
 - Simpan budget trip
 
+# documention by postman
+link : https://documenter.getpostman.com/view/55461729/2sBXwvK8g5
+
+# Deploy url :
+ travel-planer-production.up.railway.app
 

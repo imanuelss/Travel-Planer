@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"individual-project/helpers"
 	"individual-project/models"
 	"individual-project/services"
 	"strconv"
@@ -25,9 +26,16 @@ func (h *AIGenerationHandler) Create(c echo.Context) error {
 		})
 	}
 
-	ai.GeneratedResult = "AI Generated Itinerary based on prompt: " + ai.Prompt
+	result, err := helpers.GenerateWithGemini(ai.Prompt)
+	if err != nil {
+		return c.JSON(500, map[string]string{
+			"error": err.Error(),
+		})
+	}
 
-	err := h.service.Create(&ai)
+	ai.GeneratedResult = result
+
+	err = h.service.Create(&ai)
 	if err != nil {
 		return c.JSON(500, map[string]string{
 			"error": err.Error(),
